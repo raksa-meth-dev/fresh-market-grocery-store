@@ -1,3 +1,4 @@
+import { Counter } from "@/components/counter";
 import Image from "next/image";
 
 export default function Home() {
@@ -38,6 +39,8 @@ export default function Home() {
             Looking for a starting point or more instructions? Explore our curated visual resources or learning modules.
           </p>
         </div>
+
+        <Counter/>
 
         {/* Link Cards */}
         <div className="mt-10 grid w-full max-w-lg grid-cols-1 gap-4 sm:grid-cols-2">
