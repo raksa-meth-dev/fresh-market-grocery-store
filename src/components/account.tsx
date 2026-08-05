@@ -39,7 +39,7 @@ export function Account() {
         onClick={() => setIsOpen((current) => !current)}
         className="flex h-11 min-w-11 flex-col items-center justify-center rounded-lg px-2 text-slate-700 transition hover:bg-slate-100 hover:text-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 sm:min-w-14"
       >
-        <AccountIcon className="size-5" />
+        <AccountIcon className="size-6" />
         <span className="mt-0.5 hidden text-[11px] font-medium leading-none sm:block">
           Account
         </span>
