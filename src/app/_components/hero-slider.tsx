@@ -163,6 +163,7 @@ export function HeroSlider() {
                 alt={slide.imageAlt}
                 fill
                 priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
                 sizes="100vw"
                 className={[
                   "object-cover transition-transform duration-[7000ms]",
@@ -171,25 +172,27 @@ export function HeroSlider() {
                 ].join(" ")}
               />
 
+              {/* Mobile overlay */}
               <div className="absolute inset-0 bg-slate-950/45 md:hidden" />
 
               <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/55 to-slate-950/10 md:hidden" />
 
+              {/* Desktop overlay */}
               <div className="absolute inset-0 hidden bg-linear-to-r from-slate-950/95 via-slate-900/75 to-green-950/10 md:block" />
 
               <div className="absolute inset-0 hidden bg-linear-to-t from-slate-950/55 via-transparent to-transparent md:block" />
 
+              {/* Decorative glow */}
               <div className="absolute -left-28 top-1/2 hidden size-[440px] -translate-y-1/2 rounded-full bg-green-700/20 blur-3xl sm:block" />
 
+              {/* Hero content */}
               <div
                 className={[
                   "relative z-10 mx-auto flex h-full w-full max-w-7xl",
-                  "items-end px-5 pt-24 pb-24",
-                  "min-[420px]:px-6",
-                  "sm:px-8 sm:pb-28",
-                  "md:items-center md:px-10 md:py-16",
-                  "lg:px-16",
-                  "xl:px-20",
+                  "items-end px-4 pt-24 pb-28",
+                  "sm:px-6 sm:pb-32",
+                  "md:items-center md:py-16",
+                  "lg:px-8",
                 ].join(" ")}
               >
                 <div
@@ -260,8 +263,7 @@ export function HeroSlider() {
                         "cursor-pointer rounded-lg bg-green-700 px-5 py-3",
                         "text-sm font-semibold text-white",
                         "shadow-lg shadow-slate-950/30",
-                        "transition",
-                        "hover:bg-green-800",
+                        "transition hover:bg-green-800",
                         "active:scale-[0.98]",
                         "focus-visible:ring-2 focus-visible:ring-green-400",
                         "focus-visible:ring-offset-2",
@@ -298,95 +300,138 @@ export function HeroSlider() {
           );
         })}
 
-        <button
-          type="button"
-          aria-label="Show previous slide"
-          onClick={goToPreviousSlide}
-          className={[
-            "absolute top-1/2 left-3 z-20",
-            "grid size-11 -translate-y-1/2 place-items-center",
-            "cursor-pointer rounded-full border border-white/25",
-            "bg-slate-950/55 text-white shadow-lg shadow-black/20",
-            "backdrop-blur-md transition duration-200",
-            "hover:scale-110 hover:border-green-400/60 hover:bg-green-700",
-            "active:scale-95",
-            "focus-visible:ring-2 focus-visible:ring-green-400",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
-            "focus-visible:outline-none",
-            "sm:left-5 sm:size-12",
-            "md:left-6",
-            "lg:left-8 lg:opacity-0 lg:group-hover:opacity-100",
-          ].join(" ")}
-        >
-          <ChevronLeftIcon />
-        </button>
-
-        <button
-          type="button"
-          aria-label="Show next slide"
-          onClick={goToNextSlide}
-          className={[
-            "absolute top-1/2 right-3 z-20",
-            "grid size-11 -translate-y-1/2 place-items-center",
-            "cursor-pointer rounded-full border border-white/25",
-            "bg-slate-950/55 text-white shadow-lg shadow-black/20",
-            "backdrop-blur-md transition duration-200",
-            "hover:scale-110 hover:border-green-400/60 hover:bg-green-700",
-            "active:scale-95",
-            "focus-visible:ring-2 focus-visible:ring-green-400",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
-            "focus-visible:outline-none",
-            "sm:right-5 sm:size-12",
-            "md:right-6",
-            "lg:right-8 lg:opacity-0 lg:group-hover:opacity-100",
-          ].join(" ")}
-        >
-          <ChevronRightIcon />
-        </button>
-
+        {/* Navigation */}
         <div
-          aria-label="Choose a slide"
           className={[
             "absolute bottom-4 left-1/2 z-20",
             "flex -translate-x-1/2 items-center gap-1.5",
             "rounded-full border border-white/15",
-            "bg-slate-950/45 px-2 py-1.5",
+            "bg-slate-950/55 px-2 py-1.5",
             "shadow-lg shadow-black/20 backdrop-blur-md",
             "sm:bottom-6 sm:gap-2 sm:px-3 sm:py-2",
+
+            // Desktop: make this wrapper cover the slider without blocking content.
+            "lg:pointer-events-none lg:inset-0",
+            "lg:translate-x-0 lg:border-0",
+            "lg:bg-transparent lg:p-0",
+            "lg:shadow-none lg:backdrop-blur-none",
           ].join(" ")}
         >
-          {slides.map((slide, index) => {
-            const isActive = index === activeSlide;
+          {/* Previous */}
+          <button
+            type="button"
+            aria-label="Show previous slide"
+            onClick={goToPreviousSlide}
+            className={[
+              "grid size-9 shrink-0 place-items-center",
+              "cursor-pointer rounded-full text-white",
+              "transition duration-200",
+              "hover:bg-white/10 active:scale-95",
+              "focus-visible:ring-2 focus-visible:ring-green-400",
+              "focus-visible:ring-offset-2",
+              "focus-visible:ring-offset-slate-950",
+              "focus-visible:outline-none",
+              "sm:size-10",
 
-            return (
-              <button
-                key={slide.id}
-                type="button"
-                aria-label={`Go to slide ${index + 1}`}
-                aria-current={isActive ? "true" : undefined}
-                onClick={() => goToSlide(index)}
-                className={[
-                  "group/indicator grid size-8 cursor-pointer place-items-center",
-                  "rounded-full transition duration-200",
-                  "hover:bg-white/10",
-                  "focus-visible:ring-2 focus-visible:ring-green-400",
-                  "focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-slate-950",
-                  "focus-visible:outline-none",
-                  "sm:size-9",
-                ].join(" ")}
-              >
-                <span
+              // Desktop position
+              "lg:pointer-events-auto lg:absolute",
+              "lg:top-1/2 lg:left-8",
+              "lg:size-12 lg:-translate-y-1/2",
+              "lg:border lg:border-white/25",
+              "lg:bg-slate-950/55",
+              "lg:shadow-lg lg:shadow-black/20",
+              "lg:backdrop-blur-md",
+              "lg:opacity-0 lg:group-hover:opacity-100",
+              "lg:hover:scale-110",
+              "lg:hover:border-green-400/60",
+              "lg:hover:bg-green-700",
+            ].join(" ")}
+          >
+            <ChevronLeftIcon />
+          </button>
+
+          {/* Indicators */}
+          <div
+            aria-label="Choose a slide"
+            className={[
+              "flex items-center gap-1 sm:gap-1.5",
+              "lg:pointer-events-auto lg:absolute",
+              "lg:bottom-6 lg:left-1/2",
+              "lg:-translate-x-1/2",
+              "lg:rounded-full",
+              "lg:border lg:border-white/15",
+              "lg:bg-slate-950/45",
+              "lg:px-3 lg:py-2",
+              "lg:shadow-lg lg:shadow-black/20",
+              "lg:backdrop-blur-md",
+            ].join(" ")}
+          >
+            {slides.map((slide, index) => {
+              const isActive = index === activeSlide;
+
+              return (
+                <button
+                  key={slide.id}
+                  type="button"
+                  aria-label={`Go to slide ${index + 1}`}
+                  aria-current={isActive ? "true" : undefined}
+                  onClick={() => goToSlide(index)}
                   className={[
-                    "block rounded-full transition-all duration-300",
-                    isActive
-                      ? "h-2.5 w-7 bg-green-500 sm:w-8"
-                      : "size-2.5 bg-white/60 group-hover/indicator:scale-125 group-hover/indicator:bg-white",
+                    "group/indicator grid size-8 cursor-pointer place-items-center",
+                    "rounded-full transition duration-200",
+                    "hover:bg-white/10",
+                    "focus-visible:ring-2 focus-visible:ring-green-400",
+                    "focus-visible:ring-offset-2",
+                    "focus-visible:ring-offset-slate-950",
+                    "focus-visible:outline-none",
+                    "sm:size-9",
                   ].join(" ")}
-                />
-              </button>
-            );
-          })}
+                >
+                  <span
+                    className={[
+                      "block rounded-full transition-all duration-300",
+                      isActive
+                        ? "h-2.5 w-7 bg-green-500 sm:w-8"
+                        : "size-2.5 bg-white/60 group-hover/indicator:scale-125 group-hover/indicator:bg-white",
+                    ].join(" ")}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Next */}
+          <button
+            type="button"
+            aria-label="Show next slide"
+            onClick={goToNextSlide}
+            className={[
+              "grid size-9 shrink-0 place-items-center",
+              "cursor-pointer rounded-full text-white",
+              "transition duration-200",
+              "hover:bg-white/10 active:scale-95",
+              "focus-visible:ring-2 focus-visible:ring-green-400",
+              "focus-visible:ring-offset-2",
+              "focus-visible:ring-offset-slate-950",
+              "focus-visible:outline-none",
+              "sm:size-10",
+
+              // Desktop position
+              "lg:pointer-events-auto lg:absolute",
+              "lg:top-1/2 lg:right-8",
+              "lg:size-12 lg:-translate-y-1/2",
+              "lg:border lg:border-white/25",
+              "lg:bg-slate-950/55",
+              "lg:shadow-lg lg:shadow-black/20",
+              "lg:backdrop-blur-md",
+              "lg:opacity-0 lg:group-hover:opacity-100",
+              "lg:hover:scale-110",
+              "lg:hover:border-green-400/60",
+              "lg:hover:bg-green-700",
+            ].join(" ")}
+          >
+            <ChevronRightIcon />
+          </button>
         </div>
 
         <div
@@ -445,7 +490,7 @@ function ArrowRightIcon() {
       strokeLinejoin="round"
     >
       <path d="M5 12h14" />
-      <path d="m13 6 6 6-6-6" />
+      <path d="m13 6 6 6-6 6" />
     </svg>
   );
 }
