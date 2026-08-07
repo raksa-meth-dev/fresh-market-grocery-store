@@ -4,6 +4,7 @@ import Image from "next/image";
 import { HeroSlider } from "./_components/hero-slider";
 import { GroceryFastSelection } from "./_components/grocery-fast-selection";
 import { BuyItAgain } from "./_components/buy-it-again";
+import ShopByCategory from "./_components/shop-by-category";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <HeroSlider/>
       <GroceryFastSelection />
       <BuyItAgain/>
+      <ShopByCategory/>
     </div>
   );
 }

@@ -112,18 +112,6 @@ export function BuyItAgain({ onAddToCart }: BuyItAgainProps) {
           BUY IT AGAIN
         </h2>
 
-        {/* <Link
-          href="/orders"
-          className={[
-            "shrink-0 text-sm font-medium text-green-700",
-            "underline-offset-4 transition",
-            "hover:text-green-800 hover:underline",
-            "focus-visible:ring-2 focus-visible:ring-green-600",
-            "focus-visible:ring-offset-2 focus-visible:outline-none",
-          ].join(" ")}
-        >
-          Photos
-        </Link> */}
       </div>
 
       {/*
